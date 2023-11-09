@@ -1,0 +1,7 @@
+app: "todo"
+env: "local"
+storage_path: "./storage.db"
+http_server:
+  address: "127.0.0.1:8081"
+  timeout: 4s
+  idle_timeout: 60s
