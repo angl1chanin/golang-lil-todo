@@ -25,7 +25,7 @@ func (s *todoService) Create(title string) error {
 }
 
 func (s *todoService) UpdateStatus(id int) error {
-	return nil
+	return s.r.UpdateStatus(id)
 }
 
 func (s *todoService) UpdateTitle(id int, title string) error {
@@ -33,5 +33,5 @@ func (s *todoService) UpdateTitle(id int, title string) error {
 }
 
 func (s *todoService) Delete(id int) error {
-	return nil
+	return s.r.Delete(id)
 }

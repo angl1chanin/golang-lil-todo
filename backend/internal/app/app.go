@@ -1,6 +1,7 @@
 package app
 
 import (
+	"fmt"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"todo/config"
@@ -27,21 +28,26 @@ func Run(cfg *config.Config) {
 	// setup handlers
 	handler := handlers.NewHandler(useCase)
 
+	gin.SetMode(gin.DebugMode)
+
 	// HTTP server
 	router := gin.Default()
 
 	// Настройка CORS middleware
-	config := cors.DefaultConfig()
-	config.AllowOrigins = []string{"*"}                                                                                                               // Разрешенный домен
-	config.AllowMethods = []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"}                                                                         // Разрешенные методы
-	config.AllowHeaders = []string{"Content-Type", "Access-Control-Allow-Headers", "Authorization", "X-Requested-With", "ngrok-skip-browser-warning"} // Разрешенные заголовки
+	corsCfg := cors.DefaultConfig()
+	corsCfg.AllowOrigins = []string{"*"}                                                                                                               // Разрешенный домен
+	corsCfg.AllowMethods = []string{"GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"}                                                                // Разрешенные методы
+	corsCfg.AllowHeaders = []string{"Content-Type", "Access-Control-Allow-Headers", "Authorization", "X-Requested-With", "ngrok-skip-browser-warning"} // Разрешенные заголовки
 
 	// Добавление CORS middleware в роутер
-	router.Use(cors.New(config))
+	router.Use(cors.New(corsCfg))
 
 	// setup routes
 	routes.Setup(router, handler)
 
 	// start server
-	router.Run(cfg.Address)
+	err = router.Run(cfg.Address)
+	if err != nil {
+		fmt.Println(err)
+	}
 }

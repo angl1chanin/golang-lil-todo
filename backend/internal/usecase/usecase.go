@@ -32,7 +32,7 @@ func (s *useCase) Create(title string) error {
 }
 
 func (s *useCase) UpdateStatus(id int) error {
-	return nil
+	return s.todoService.UpdateStatus(id)
 }
 
 func (s *useCase) UpdateTitle(id int, title string) error {
@@ -40,5 +40,5 @@ func (s *useCase) UpdateTitle(id int, title string) error {
 }
 
 func (s *useCase) Delete(id int) error {
-	return nil
+	return s.todoService.Delete(id)
 }
